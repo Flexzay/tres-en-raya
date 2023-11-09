@@ -179,4 +179,60 @@ def jugar(jugador1, jugador2, vs_maquina=False):
         pintar_tablero()
         ficha = 'x' if (fichas_tablero % 2 == 0) else 'o'
         if not vs_maquina or ficha == 'x':
-            casilla
+            casilla = colocar_ficha(ficha)
+        else:
+            casilla = colocar_ficha_maquina(ficha)
+        
+        if hemosGanado(casilla, ficha):
+            continuar = False
+            print("¡{} ha ganado!".format(jugador1 if ficha == 'x' else jugador2))
+        
+        fichas_tablero += 1
+        if fichas_tablero == 9:
+            continuar = False
+
+    pintar_tablero()
+
+def colocar_ficha_maquina(ficha):
+    """
+    Coloca la ficha de la máquina en el tablero.
+
+    Parameters
+    ----------
+    ficha : str
+        Ficha de la máquina ('x' o 'o').
+
+    Returns
+    -------
+    casilla : int
+        Índice de la casilla en la que se colocó la ficha.
+    """
+    print("Turno de la máquina...")
+    # Estrategia sencilla: la máquina elige una casilla disponible al azar
+    casillas_disponibles = [i for i, c in enumerate(tablero) if c == ' ']
+    casilla = random.choice(casillas_disponibles)
+    
+    tablero[casilla] = ficha
+    return casilla
+
+# Iniciar juego
+continuar = True
+while continuar:
+    print("1. Jugar con amigos")
+    print("2. Jugar contra la máquina")
+    print("3. Acerca de")
+    print("4. Salir")
+
+    opcion = input("Seleccione una opción (1-4): ")
+
+    if opcion == "1":
+        jugar_con_amigos()
+    elif opcion == "2":
+        jugar_contra_maquina()
+    elif opcion == "3":
+        acerca_de()
+    elif opcion == "4":
+        print("Gracias por jugar. ¡Hasta luego!")
+        continuar = False
+    else:
+        print("Opción no válida. Inténtalo de nuevo.")
