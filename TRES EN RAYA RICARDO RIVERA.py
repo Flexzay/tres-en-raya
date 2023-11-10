@@ -137,10 +137,18 @@ def hemosGanado(casilla, ficha):
     hermanos = numeroHermanos(casilla, ficha, 0, -1) + numeroHermanos(casilla, ficha, 0, 1)
     return hermanos == 2
 
+def reiniciar_tablero():
+    """
+    Reinicia el tablero para una nueva partida.
+    """
+    global tablero
+    tablero = [" "] * (tablero_filas * tablero_columnas)
+
 def jugar_con_amigos():
     """
     Permite a dos jugadores jugar entre ellos.
     """
+    reiniciar_tablero()  # Reiniciamos el tablero para una nueva partida
     jugador1 = input("Digite el nombre del primer jugador: ")
     jugador2 = input("Digite el nombre del segundo jugador: ")
     jugar(jugador1, jugador2)
@@ -149,6 +157,7 @@ def jugar_contra_maquina():
     """
     Permite a un jugador jugar contra la máquina.
     """
+    reiniciar_tablero()  # Reiniciamos el tablero para una nueva partida
     jugador = input("Digite su nombre: ")
     jugar(jugador, "Máquina", True)
 
